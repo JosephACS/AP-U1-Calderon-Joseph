@@ -37,4 +37,4 @@ Joseph Alexander Calderón Saltos $\cdot$ Aplicaciones Distribuidas (ISR-701)
 \textbf{3. Punto único de fallo.} Una mejora posible sería mantener réplicas del contador y elegir coordinador con Bully o un protocolo de consenso apropiado. La nueva dificultad sería impedir decisiones simultáneas divergentes sobre el mismo aforo, especialmente durante una partición de red.
 \textbf{4. Falacia de red y latencia.} Se diseña teniendo presente que la red no es instantánea ni totalmente confiable. Un latido cada dos segundos y un umbral de seis segundos son supuestos del entorno local: si los mensajes tardaran siete segundos podrían producirse falsos avisos de caída aunque la puerta siguiera operativa.
 \section*{Limitaciones y autenticidad}
-Este prototipo no incorpora persistencia ni replicación de contador, y el token circula en texto claro en TCP local; no debe usarse en producción.
+Este prototipo no incorpora persistencia ni replicación de contador, y el token circula en texto claro en TCP local, las capturas no pudieron realizarse por falta de java al no tener internet no se pudo instalar. Se prueba en repositorio para verificar que si sirva.

@@ -1,0 +1,10 @@
+../../../Downloads/AP-U1-Calderon-Joseph/clases/
+*.class
+*.aux
+*.logaux
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+.DS_Store
