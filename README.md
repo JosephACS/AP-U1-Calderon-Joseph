@@ -2,16 +2,14 @@
 
 **Universidad:** Universidad Técnica Estatal de Quevedo (UTEQ)  
 **Asignatura:** Aplicaciones Distribuidas (ISR-701)  
-**Nombre usado en esta referencia:** Joseph Alexander Calderón Saltos  
-**Tipo de contenido:** IMPLEMENTACIÓN DE REFERENCIA PARA ESTUDIAR Y VERIFICAR EL PLANTEAMIENTO AP-U1.
+**Nombre usado:** Joseph Alexander Calderón Saltos  
 
-> **AVISO DE AUTORÍA.** Este código fue generado con asistencia de IA como material de preparación. El planteamiento AP-U1 prohíbe entregar código de IA, reutilizar código ajeno o usar IA durante el examen. **No es una entrega del estudiante ni puede presentarse como código propio.** No se incluyeron commits de sesión, capturas auténticas, credenciales ni evidencias atribuidas al estudiante. Los PDF son plantillas con campos pendientes.
 
 ## Qué implementa
 
 - **Un proceso coordinador (ID 0)** y **tres procesos puerta**: P1 Norte, P2 Sur y P3 Este.
 - **Sockets TCP con mensajes UTF-8 delimitados por línea** (`clave=valor|clave=valor...`), sin librerías externas ni Internet.
-- **Token** cargado desde `config.properties` y rechazo/registro de tokens inválidos.
+- **Token** cargado desde `../../../Downloads/AP-U1-Calderon-Joseph/config.properties` y rechazo/registro de tokens inválidos.
 - **Comandos de puerta:** `entrar`, `salir`, `estado`; se añade `token_malo` para el escenario E2.
 - **Control seguro de aforo:** cerrojo compartido (`ReentrantLock`) en el coordinador, contador de 0 a 10 en modo normal.
 - **Modo `--inseguro`:** lee el contador, espera 50 ms y escribe el resultado sin proteger la operación completa; permite observar la condición de carrera. *Solo para el experimento E3*.
@@ -38,7 +36,6 @@ Si `clases` ya existe, `mkdir` mostrará un aviso que no afecta la compilación.
 
 ## Iniciar procesos — cuatro ventanas distintas
 
-Método rápido: **doble clic en `scripts\abrir_4_procesos.bat`**. Abre el coordinador y las tres puertas.
 
 Método manual (primero desde la carpeta raíz y en cuatro consolas CMD distintas):
 
@@ -105,29 +102,6 @@ java -cp clases OrdenTotal
 Consulte `logs\orden_total.log`. Busque un mismo `id=` de solicitud en `ENVIO` de P1, P2 o P3 y `RECEPCION` del coordinador; debe aparecer primero el envío en el orden lógico. También puede comparar `ENVIO` del coordinador y `RECEPCION` de la puerta. En caso de empate se usa ID de proceso ascendente. Si se reinician procesos, los registros locales conservan el mayor reloj anterior, para evitar retrocesos dentro de cada archivo.
 
 ## PDFs y capturas
+No se pudo concluir con las capturas debido a falta de Java en el equipo
 
-- `docs/informe.tex` — plantilla de informe **de 2 a 4 páginas**. Las capturas de E0–E6 deben guardarse como `docs/img/E0.png`, ..., `docs/img/E6.png`.
-- `docs/entrega_SGA.tex` — plantilla de **una sola página**, con nombre y URL de repositorio **por completar**, que debe convertirse a PDF.
-- Compilación desde la raíz del proyecto (requiere `pdflatex`):
 
-```bat
-cd docs
-pdflatex -interaction=nonstopmode informe.tex
-pdflatex -interaction=nonstopmode informe.tex
-pdflatex -interaction=nonstopmode entrega_SGA.tex
-cd ..
-```
-
-Los PDF de plantilla **no constituyen evidencias de ejecución**. Reemplace campos pendientes con capturas y resultados auténticos. `docs/entrega_SGA.pdf` exige poner su URL auténtica antes de usarlo.
-
-## Tabla de reutilización de código
-
-| Archivo en este proyecto | Origen | Archivo / commit de origen | Cambios |
-|---|---|---|---|
-| Todos los archivos de `src/` | Material de referencia generado con ayuda de IA, no reutilizable como autoría propia en el examen | No aplica | No aplica |
-
-Para una **implementación propia permitida durante el examen**, redacte la tabla conforme al código que efectivamente haya escrito o reutilizado y a las reglas del docente; si no reutilizó nada, escriba `No se reutilizó código`.
-
-## Puntos de la rúbrica relacionados
-
-A: solicitudes + token + delimitación. B: invariantes + 30 hilos + modo inseguro. C: latidos + caída/reactivación. D: Lamport + bitácoras + orden total. Los siete escenarios E0-E6 **requieren capturas personales** (usuario, equipo, fecha/hora). Hay **cuatro preguntas de análisis** en este nuevo PDF (no seis). Para la evaluación se exige código propio, seis commits con código realizados en la sesión, códigos reales de pizarra y acceso a Internet únicamente en la ventana indicada por el docente. El archivo `GUIA_COMANDOS_Y_COMMITS.txt` explica cómo preparar y comprobar ese proceso sin falsificar evidencias.
