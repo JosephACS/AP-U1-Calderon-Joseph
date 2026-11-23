@@ -1,0 +1,40 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[a4paper,top=1.45cm,bottom=1.45cm,left=1.65cm,right=1.65cm]{geometry}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small AforoSeguro -- AP-U1}
+\fancyhead[R]{\small Borrador de estudio -- evidencia pendiente}
+\fancyfoot[C]{\thepage}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+\newcommand{\evidencia}[2]{%
+\begin{minipage}[t]{0.48\textwidth}
+\textbf{#1}\par
+\IfFileExists{img/#2.png}{\includegraphics[width=.98\linewidth,height=3.25cm,keepaspectratio]{img/#2.png}}{\fbox{\parbox[c][3.15cm][c]{.92\linewidth}{\centering\small INSERTAR CAPTURA REAL: \\img/#2.png}}}
+\end{minipage}}
+\begin{document}
+\begin{center}
+{\large\bfseries AP-U1 -- AforoSeguro: informe de observaciones}\\
+Joseph Alexander Calderón Saltos $\cdot$ Aplicaciones Distribuidas (ISR-701)
+\end{center}
+\textbf{Propósito.} Verificar comunicación TCP, autenticación, control de aforo concurrente, latidos y reloj de Lamport de un prototipo local con un coordinador y tres puertas. Esta plantilla contiene instrucciones para documentar pruebas auténticas; no sustituye observaciones del estudiante.
+
+
+\newpage
+
+\textbf{Dos pares causales obtenidos de tus logs:}\\
+\textbf{Par 1:} ID \underline{\hspace{5cm}}; ENVIO \underline{\hspace{1cm}} $<$ RECEPCION \underline{\hspace{1cm}}.\\
+\textbf{Par 2:} ID \underline{\hspace{5cm}}; ENVIO \underline{\hspace{1cm}} $<$ RECEPCION \underline{\hspace{1cm}}.\\
+
+\section*{Cuatro preguntas de análisis (guía para redactar con evidencias reales)}
+\textbf{1. Concurrencia y modo inseguro.} En el modo normal, el coordinador comprueba y actualiza el contador dentro de una sección crítica protegida por un cerrojo. Esto impide que dos hilos autoricen simultáneamente una entrada basándose en el mismo cupo. El modo inseguro separa lectura y escritura mediante una pausa de 50 ms y puede autorizar entradas de más aunque el contador final pierda actualizaciones.
+\textbf{2. Caída del coordinador y CAP.} Al perder el coordinador, la puerta de este prototipo no autoriza una nueva entrada: conserva la seguridad de no superar el aforo a costa de dejar de atender solicitudes. CAP es una referencia conceptual sobre consistencia y disponibilidad ante particiones; este diseño centralizado también sufre un punto único de fallo, no es un sistema replicado CP completo.
+\textbf{3. Punto único de fallo.} Una mejora posible sería mantener réplicas del contador y elegir coordinador con Bully o un protocolo de consenso apropiado. La nueva dificultad sería impedir decisiones simultáneas divergentes sobre el mismo aforo, especialmente durante una partición de red.
+\textbf{4. Falacia de red y latencia.} Se diseña teniendo presente que la red no es instantánea ni totalmente confiable. Un latido cada dos segundos y un umbral de seis segundos son supuestos del entorno local: si los mensajes tardaran siete segundos podrían producirse falsos avisos de caída aunque la puerta siguiera operativa.
+\section*{Limitaciones y autenticidad}
+Este prototipo no incorpora persistencia ni replicación de contador, y el token circula en texto claro en TCP local; no debe usarse en producción.
